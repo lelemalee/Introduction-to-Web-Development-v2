@@ -18,40 +18,46 @@ document.addEventListener("DOMContentLoaded", function() {
                     screen.innerHTML = number1 + operator + number2;
                 }
             }
-            
-            if(event.target.innerHTML === '÷'){
-                setOperator('÷');
+
+            switch(event.target.innerHTML){
+                case '÷':
+                    setOperator('÷');
+                    break;
+                case '*':
+                    setOperator('*');
+                    break;
+                case '-':
+                    setOperator('-');
+                    break;
+                case '+':
+                    setOperator('+');
+                    break;
+                case 'C':
+                    screen.innerHTML = 0;
+                    reset();
+                    break;
+                case '←':
+                    clearLastCharacter();
+                    break;
+                case '=':
+                    calculateNumbers();
+                    break; 
+            }      
+
+            function setOperator(operatorType){
+                operator = operatorType;
+                screen.innerHTML = number1 + operator;
+                currentNumber = 2;
             }
 
-            if(event.target.innerHTML === '*'){
-                setOperator('*');
+            function reset(){
+                currentNumber = 1;
+                number1 = '';
+                number2 = '';
+                operator = '';  
             }
 
-            if(event.target.innerHTML === '-'){
-                setOperator('-');
-            }
-
-            if(event.target.innerHTML === '+'){
-                setOperator('+');
-            }
-
-            if(event.target.innerHTML === 'C'){
-                screen.innerHTML = 0;
-                reset();
-            }
-
-            if(event.target.innerHTML === '←'){
-                if(currentNumber === 1){ 
-                    number1 = number1.slice(0, -1); 
-                    screen.innerHTML = number1;    
-                } 
-                if(currentNumber === 2){
-                    number2 = number2.slice(0, -1);
-                    screen.innerHTML = number1 + operator + number2;    
-                }
-            }
-            
-            if(event.target.innerHTML === '='){
+            function calculateNumbers(){
                 if(operator === '÷'){
                     result = Number(number1) / Number(number2);
                     screen.innerHTML = result;
@@ -74,18 +80,15 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
 
-            function setOperator(operatorType){
-                operator = operatorType;
-                screen.innerHTML = number1 + operator;
-                currentNumber = 2;
+            function clearLastCharacter(){
+                if(currentNumber === 1){ 
+                    number1 = number1.slice(0, -1); 
+                    screen.innerHTML = number1;    
+                } 
+                if(currentNumber === 2){
+                    number2 = number2.slice(0, -1);
+                    screen.innerHTML = number1 + operator + number2;    
+                }
             }
-
-            function reset(){
-                currentNumber = 1;
-                number1 = '';
-                number2 = '';
-                operator = '';  
-            }
-
         });
 });
